@@ -1,4 +1,5 @@
 require 'pp'
+require "bigdecimal/math"
 
 def ppd(*arg)
   if $DEBUG
@@ -77,6 +78,11 @@ class Integer
     return 1 if self == 0
     (1..self).inject(:*)
   end
+
+  # >= Ruby 2.5
+  def self.sqrt(v)
+    BigMath::sqrt(BigDecimal(v, 110), 110).to_i
+  end
 end
 
 # main
@@ -95,7 +101,7 @@ cases = readline().to_i
 
     # 同じ文字が2文字連続
     if prime == pair[0]
-      prime = Math.sqrt(prime).to_i
+      prime = Integer.sqrt(prime)
     end
 
     primes[prime] = 1
@@ -108,22 +114,23 @@ cases = readline().to_i
   prime = list[-1] / (list[-2].gcd(list[-1]))
   primes[prime] = 1 if prime != 1
 
-  # なぜか26個揃わない場合がある
-  extra = []
-  list.each do |e|
-    primes.keys.each do |e1|
-      if e % e1 == 0
-        v = e / e1
-        extra << v if (v != 1 && v <= n)
-      end
-    end
-  end
+  # # なぜか26個揃わない場合がある
+  # extra = []
+  # list.each do |e|
+  #   primes.keys.each do |e1|
+  #     if e % e1 == 0
+  #       v = e / e1
+  #       extra << v if (v != 1 && v <= n)
+  #     end
+  #   end
+  # end
+  # primes = (primes.keys + extra).uniq
 
-  primes = (primes.keys + extra).uniq
+  primes = primes.keys
 
 ppd primes.size
 ppd primes.sort
-  raise if primes.size != 26
+  # raise if primes.size != 26
 
   tbl = {}
   ("A".."Z").zip(primes.sort).each do |p|
@@ -138,7 +145,7 @@ putsd a,b
 
     if factor == a
       # 同じ文字が2文字連続
-      factor = Math.sqrt(factor).to_i
+      factor = Integer.sqrt(factor)
       answer += tbl.rassoc(factor)[0]
     else
       answer += tbl.rassoc(a / factor)[0]
@@ -153,7 +160,7 @@ putsd answer
 
   if factor == a
     # 同じ文字が2文字連続
-    factor = Math.sqrt(factor).to_i
+    factor = Integer.sqrt(factor)
     answer += tbl.rassoc(factor)[0] * 2
   else
     answer += tbl.rassoc(factor)[0]
