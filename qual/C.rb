@@ -108,7 +108,18 @@ cases = readline().to_i
   prime = list[-1] / (list[-2].gcd(list[-1]))
   primes[prime] = 1 if prime != 1
 
-  primes = primes.keys
+  # なぜか26個揃わない場合がある
+  extra = []
+  list.each do |e|
+    primes.keys.each do |e1|
+      if e % e1 == 0
+        v = e / e1
+        extra << v if (v != 1 && v <= n)
+      end
+    end
+  end
+
+  primes = (primes.keys + extra).uniq
 
 ppd primes.size
 ppd primes.sort
