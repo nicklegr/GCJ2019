@@ -103,23 +103,26 @@ cases = readline().to_i
 
   # 最初と最後の文字に対応するprimeはまだ分かってない可能性がある
   prime = list[0] / (list[0].gcd(list[1]))
-  primes[prime] = 1
+  primes[prime] = 1 if prime != 1
 
   prime = list[-1] / (list[-2].gcd(list[-1]))
-  primes[prime] = 1
+  primes[prime] = 1 if prime != 1
 
   primes = primes.keys
 
+ppd primes.size
+ppd primes.sort
   raise if primes.size != 26
 
   tbl = {}
   ("A".."Z").zip(primes.sort).each do |p|
     tbl[p[0]] = p[1]
   end
-# ppd tbl
+ppd tbl
 
   answer = ""
   list.each_cons(2) do |a, b|
+putsd a,b
     factor = a.gcd(b)
 
     if factor == a
@@ -129,6 +132,7 @@ cases = readline().to_i
     else
       answer += tbl.rassoc(a / factor)[0]
     end
+putsd answer
   end
 
   # 最後の2文字
