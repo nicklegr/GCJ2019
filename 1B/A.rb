@@ -79,25 +79,6 @@ class Integer
   end
 end
 
-def solve(dirs, q)
-  range0 = [0, q, 0]
-  range1 = [0, q, 0]
-
-  dirs.sort_by! do |e|
-    e[0]
-  end
-
-  dirs.each do |e|
-    if e[1] == "-"
-      range0 = [range0[0], e[0]-1, range0[2]+1]
-      if e[0] 
-    end
-  end
-
-
-
-end
-
 # main
 t_start = Time.now
 
@@ -117,18 +98,101 @@ cases = readline().to_i
   dirs = mans.select do |e|
     e[2] == "W" || e[2] == "E"
   end
-  dirs.map! do |e|
-    [e[0], e[2] == "W" ? "-" : "+"]
+  coords = dirs.map do |e|
+    if e[2] == "W"
+      [e[0] - 1, e[0]]
+    else
+      [e[0], e[0] + 1]
+    end
   end
-  ans_x = solve(dirs)
+  coords << 0
+  coords << q
+  coords.flatten!
+  coords.uniq!
+  coords.sort!
+ppd coords
+
+  count = {}
+  coords.each do |e|
+    count[e] = 1
+  end
+
+  dirs.each do |e|
+    count.each do |p_, c|
+      if e[2] == "W"
+        if p_ < e[0]
+          count[p_] += 1
+        end
+      else
+        if p_ > e[0]
+          count[p_] += 1
+        end
+      end
+    end
+  end
+ppd count
+
+  ans_x = count.sort do |a, b|
+    if a[1] == b[1]
+      a[0] <=> b[0]
+    else
+      b[1] <=> a[1]
+    end
+  end
+ppd ans_x
+
+  ans_x = ans_x[0][0]
 
 
 
 
+  dirs = mans.select do |e|
+    e[2] == "S" || e[2] == "N"
+  end
+  coords = dirs.map do |e|
+    if e[2] == "S"
+      [e[1] - 1, e[1]]
+    else
+      [e[1], e[1] + 1]
+    end
+  end
+  coords << 0
+  coords << q
+  coords.flatten!
+  coords.uniq!
+  coords.sort!
+# pp coords
 
+  count = {}
+  coords.each do |e|
+    count[e] = 1
+  end
 
+  dirs.each do |e|
+    count.each do |p_, c|
+      if e[2] == "S"
+        if p_ < e[1]
+          count[p_] += 1
+        end
+      else
+        if p_ > e[1]
+          count[p_] += 1
+        end
+      end
+    end
+  end
+# pp count
 
+  ans_y = count.sort do |a, b|
+    if a[1] == b[1]
+      a[0] <=> b[0]
+    else
+      b[1] <=> a[1]
+    end
+  end
+ppd ans_y
 
+  ans_y = ans_y[0][0]
 
   puts "Case ##{case_index}: #{ans_x} #{ans_y}"
 
