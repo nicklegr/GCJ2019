@@ -79,6 +79,25 @@ class Integer
   end
 end
 
+def solve(dirs, q)
+  range0 = [0, q, 0]
+  range1 = [0, q, 0]
+
+  dirs.sort_by! do |e|
+    e[0]
+  end
+
+  dirs.each do |e|
+    if e[1] == "-"
+      range0 = [range0[0], e[0]-1, range0[2]+1]
+      if e[0] 
+    end
+  end
+
+
+
+end
+
 # main
 t_start = Time.now
 
@@ -95,72 +114,21 @@ cases = readline().to_i
   ans_x = -1
   ans_y = -1
 
-  dir = mans.select do |e|
-    e[2] == "W"
+  dirs = mans.select do |e|
+    e[2] == "W" || e[2] == "E"
   end
-  min_w = dir.min_by do |e|
-    e[0]
+  dirs.map! do |e|
+    [e[0], e[2] == "W" ? "-" : "+"]
   end
-  min_w = min_w[0] if min_w
+  ans_x = solve(dirs)
 
-  dir = mans.select do |e|
-    e[2] == "E"
-  end
-  max_e = dir.max_by do |e|
-    e[0]
-  end
-  max_e = max_e[0] if max_e
 
-ppd min_w, max_e
-  ans_x = 
-    if !min_w && max_e
-      max_e + 1
-    elsif min_w && !max_e
-      min_w - 1
-    elsif !min_w && !max_e
-      0
-    else
-      if min_w <= max_e
-        0
-      else
-        max_e + 1
-      end
-    end
-ppd ans_x
 
-  dir = mans.select do |e|
-    e[2] == "S"
-  end
-  min_s = dir.min_by do |e|
-    e[1]
-  end
-  min_s = min_s[1] if min_s
 
-  dir = mans.select do |e|
-    e[2] == "N"
-  end
-  max_n = dir.max_by do |e|
-    e[1]
-  end
-  max_n = max_n[1] if max_n
 
-ppd "--"
-ppd min_s, max_n
-  ans_y = 
-    if !min_s && max_n
-      max_n + 1
-    elsif min_s && !max_n
-      min_s - 1
-    elsif !min_s && !max_n
-      0
-    else
-      if min_s <= max_n
-        0
-      else
-        max_n + 1
-      end
-    end
-ppd ans_y
+
+
+
 
   puts "Case ##{case_index}: #{ans_x} #{ans_y}"
 
