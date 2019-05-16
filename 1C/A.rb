@@ -179,3 +179,13 @@ ppd win
     STDERR.puts("case #{case_index} / #{cases}, time: #{Time.now - t_start} s")
   end
 end
+
+__END__
+
+RPS => IMP
+
+RP => P
+PS => S
+RS => R
+
+? => 勝つ

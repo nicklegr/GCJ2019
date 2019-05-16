@@ -181,3 +181,60 @@ putsd answer
     STDERR.puts("case #{case_index} / #{cases}, time: #{Time.now - t_start} s")
   end
 end
+
+__END__
+
+a * b = X1
+b * c = X2
+c * d = X3
+...
+x * y = X24
+y * z = X25
+
+gcd(X1, X2) = b
+gcd(X2, X3) = c
+...
+gcd(X24, X25) = y
+a = X1 / b
+z = X25 / y
+
+同じ文字が2文字連続 aa
+a * a = X1
+if sqrt(X1) is int
+  a = sqrt(X1)
+
+いや、
+a * a = X1
+a * b = X2
+gcd(X1, X2) = a
+特に例外処理不要
+
+同じ文字が3文字連続 aaa
+a * a = X1
+a * a = X2
+この場合は例外でa = sqrt(X1)
+
+aaab
+a * a = X1
+a * a = X2
+a * b = X3
+a = sqrt(X1)
+gcd(X2, X3) = a
+
+
+平文復元
+X1をa-zで割ってみる。j,kで割り切れたとする
+X2をa-zで割ってみる。k,lで割り切れたとする
+この場合、平文はjk(次はl)
+
+X1 == X2の場合、どちらもj,kで割り切れたとする
+この場合、jkjかkjkかわからない
+X2 != X3なら、上記ロジックでj*かk*かわかる。これでjkjかkjkのどちらか確定する
+同じ積が3つ以上連続する場合もある
+
+いや、X1 == X2の時点で同じ文字連続が確定するし、
+その場合は割りきれる数はaのみ。気にしなくていいのかな
+
+
+SUBDERMATOGLYPHICFJKNQVWXZ
+SSSUBDERMATOGLYPHICFJKNQVWXZ

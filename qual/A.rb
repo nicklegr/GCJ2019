@@ -127,3 +127,25 @@ cases = readline().to_i
     STDERR.puts("case #{case_index} / #{cases}, time: #{Time.now - t_start} s")
   end
 end
+
+__END__
+
+84
+-> 42 + 42
+-> 32 + 52
+
+85
+-> 43 + 42
+-> 33 + 52
+
+19
+-> 10 + 9
+
+199
+-> 100 + 99
+
+7
+-> 4 + 3
+
+9
+-> 5 + 4
